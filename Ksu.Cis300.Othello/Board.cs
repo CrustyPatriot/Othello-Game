@@ -273,7 +273,7 @@ namespace Ksu.Cis300.Othello
             HasPlay = LegalPlay(CurrentPlayer);
             if (!HasPlay)
             {
-                IsOver = !LegalPlay(CurrentPlayer);
+                IsOver = !LegalPlay(OtherPlayer);
             }
         }
 

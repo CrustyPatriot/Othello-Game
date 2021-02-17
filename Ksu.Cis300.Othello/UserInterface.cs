@@ -223,7 +223,14 @@ namespace Ksu.Cis300.Othello
         /// <param name="play">The location of the play.</param>
         private void MakePlay(Point play)
         {
-
+            if (_board.MakePlay(play))
+            {
+                UpdateStatus();
+            }
+            else
+            {
+                MessageBox.Show("Invalix Move");
+            }
         }
 
         /// <summary>
@@ -255,7 +262,7 @@ namespace Ksu.Cis300.Othello
         /// <param name="e"></param>
         private void uxPass_Click(object sender, EventArgs e)
         {
-            MakePlay();
+            MakePlay(Board.Pass);
         }
     }
 }
