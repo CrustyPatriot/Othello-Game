@@ -1,5 +1,6 @@
 ﻿/* UserInterface.cs
  * Author: Rod Howell
+ * Modified by: Alex Schexnayder
  */
 using System;
 using System.Collections.Generic;
@@ -178,6 +179,36 @@ namespace Ksu.Cis300.Othello
         /// </summary>
         private void UpdateStatus()
         {
+            uxBlackScore.Text = _board.BlackScore.ToString();
+            uxWhiteScore.Text = _board.WhiteScore.ToString();
+
+            uxBoard.Enabled = !_board.IsOver;
+            uxPass.Enabled = !_board.IsOver;
+            uxUndo.Enabled = _board.CanUndo;
+            if(_board.IsOver)
+            {
+                if (_board.BlackScore < _board.WhiteScore)
+                {
+                    uxStatus.Text = "Black wins";
+                }
+                else if(_board.WhiteScore < _board.BlackScore)
+                {
+                    uxStatus.Text = "White wins";
+                }
+                else
+                {
+                    uxStatus.Text = "Tie";
+                }
+            }
+            else if (_board.CurrentPlayer == Player.Black)
+            {
+                uxStatus.Text = "Black's turn";
+            }
+            else
+            {
+                uxStatus.Text = "White's turn";
+            }
+
             foreach (Control c in uxBoard.Controls)
             {
                 c.Invalidate();
@@ -193,6 +224,38 @@ namespace Ksu.Cis300.Othello
         private void MakePlay(Point play)
         {
 
+        }
+
+        /// <summary>
+        /// Handles a click event for the "New Game" Button.
+        /// </summary>
+        /// <param name="sender">THe button that was clicked.</param>
+        /// <param name="e"></param>
+        private void uxNewGame_Click(object sender, EventArgs e)
+        {
+            _board = new Board();
+            UpdateStatus();
+        }
+
+        /// <summary>
+        /// Handles a click event handler for the "Undo" button.
+        /// </summary>
+        /// <param name="sender">The button that was clicked</param>
+        /// <param name="e"></param>
+        private void uxUndo_Click(object sender, EventArgs e)
+        {
+            _board.Undo();
+            UpdateStatus();
+        }
+
+        /// <summary>
+        /// Handles a click event handler for the "Pass" button.
+        /// </summary>
+        /// <param name="sender">The button that was clicked.</param>
+        /// <param name="e"></param>
+        private void uxPass_Click(object sender, EventArgs e)
+        {
+            MakePlay();
         }
     }
 }
