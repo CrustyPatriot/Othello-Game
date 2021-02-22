@@ -1,5 +1,5 @@
 ﻿/* Player.cs
- * Author: Rod Howell
+ * Author: Alex Schexnayder
  */
 using System;
 using System.Collections.Generic;

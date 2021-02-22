@@ -1,6 +1,5 @@
 ﻿/* Board.cs
- * Author: Rod Howell
- * Modified by: Alex Schexnayder
+ * Author: Alex Schexnayder
  */
 using System;
 using System.Collections.Generic;
