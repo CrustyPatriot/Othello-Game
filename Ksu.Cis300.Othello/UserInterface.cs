@@ -1,6 +1,5 @@
 ﻿/* UserInterface.cs
- * Author: Rod Howell
- * Modified by: Alex Schexnayder
+ * Author: Alex Schexnayder
  */
 using System;
 using System.Collections.Generic;
@@ -64,55 +63,27 @@ namespace Ksu.Cis300.Othello
         /// </summary>
         private void DrawBoard()
         {
-            // The width and height of the board must be the sizes of
-            // 8 squares, plus the margins between
             uxBoard.Width = (_squareSize + 2 * _margin) * 8;
             uxBoard.Height = uxBoard.Width;
-
-            // Sets the padding between the squares. Because the background
-            // color of the panel is black, these will show as black lines.
             Padding p = new Padding();
             p.Left = p.Right = p.Top = p.Bottom = _margin;
 
-            // Add the squares. When adding controls to a FlowLayoutPanel, by
-            // default, they are added left to right. When there is no more
-            // horizontal room, the layout continues below these controls, starting
-            // from the left edge. Therefore, we set up nested loops, with the
-            // outer loop laying out the rows, and the inner loop laying out the
-            // squares within a row.
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    PictureBox square = new PictureBox(); // An individual square.
+                    PictureBox square = new PictureBox(); 
                     square.BackColor = Color.DarkSeaGreen;
                     square.Width = square.Height = _squareSize;
                     square.Margin = p;
                     square.BorderStyle = BorderStyle.FixedSingle;
-
-                    // We will use the Name property of a PictureBox to store the
-                    // location of the square. We use a string of the form "x,y".
                     square.Name = x + "," + y;
-
-                    // Sets the ToolTip so that when the mouse enters a square, its location
-                    // is displayed.
                     uxSquareLocation.SetToolTip(square, square.Name);
-
-                    // Add an event handler to handle a click on a square.
                     square.Click += new EventHandler(BoardSquare_Click);
-
-                    // Add an event handler to handle a Paint event. This will be
-                    // called every time the PictureBox needs to be redrawn. It will
-                    // contain code to draw any piece on that square.
                     square.Paint += new PaintEventHandler(BoardSquare_Paint);
-                    uxBoard.Controls.Add(square); // Add to the panel.
+                    uxBoard.Controls.Add(square); 
                 }
             }
-
-            // The Form's AutoSize property is set to true. This causes the form to
-            // expand to hold the FlowLayoutPanel, whose size was set above. However,
-            // the resizing doesn't take into account the status bar. We therefore
-            // explicitly add its height to the form's height.
             Size = new Size(Width, Height + uxStatusBar.Height);
         }
 
@@ -124,12 +95,7 @@ namespace Ksu.Cis300.Othello
         /// <returns>The Point representation of the given string.</returns>
         private Point GetPoint(string squareName)
         {
-            // For the x-coordinate, use the substring starting at location 0 and having
-            // length 1.
             int x = Convert.ToInt32(squareName.Substring(0, 1)); 
-
-            // For the y-coordinate, use the substring starting at location 2 and having
-            // length 1.
             int y = Convert.ToInt32(squareName.Substring(2, 1));
             return new Point(x, y);
         }
@@ -143,22 +109,18 @@ namespace Ksu.Cis300.Othello
         private void BoardSquare_Paint(object sender, PaintEventArgs e)
         {
             PictureBox square = (PictureBox)sender;
-            Point p = GetPoint(square.Name); // Convert the Name property to a Point.
-            Graphics g = e.Graphics; // The graphics context on which to draw.
+            Point p = GetPoint(square.Name);
+            Graphics g = e.Graphics; 
 
-            // Depending on the contents of the corresponding square on the Board object,
-            // we may need to draw a piece.
             switch (_board.GetContents(p)) 
             {
-                case Player.Black:
-                    // Draw a black piece.
+                case Player.Black:                    
                     g.FillEllipse(_blackBrush, _margin, _margin, _pieceDiameter, _pieceDiameter);
                     break;
                 case Player.White:
-                    // Draw a white piece.
                     g.FillEllipse(_whiteBrush, _margin, _margin, _pieceDiameter, _pieceDiameter);
                     break;
-                default: // No piece - no need to draw anything.
+                default: 
                     break;
             }
         }
