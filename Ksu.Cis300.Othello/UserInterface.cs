@@ -191,7 +191,7 @@ namespace Ksu.Cis300.Othello
             }
             else
             {
-                MessageBox.Show("Invalix Move");
+                MessageBox.Show("Invalid Move");
             }
         }
 
